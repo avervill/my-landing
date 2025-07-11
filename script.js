@@ -10,6 +10,7 @@ function scrollToContacts() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+    initAccordion();
     // Плавный скролл и подсветка пунктов меню
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
@@ -49,22 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // Подчеркиваем все пункты при скролле
-    function underlineAllOnScroll() {
-        const scrollPosition = window.scrollY;
-        
-        if (scrollPosition > 100) {
-            navLinks.forEach(link => {
-                link.classList.add('active');
-            });
-        } else {
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            activateMenu();
-        }
-    }
     
 
     // Анимация элементов при скролле
@@ -123,20 +108,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Анимация для FAQ
-    function animateFaqItems() {
-        const items = document.querySelectorAll('.accordion-item');
+    // Аккордеон FAQ - новая реализация
+function initAccordion() {
+    const accordionItems = document.querySelectorAll('.accordion-item');
+    
+    accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        const content = item.querySelector('.accordion-content');
         
-        items.forEach((item, index) => {
-            const itemPosition = item.getBoundingClientRect().top;
-            const screenPosition = window.innerHeight / 1.3;
+        header.addEventListener('click', () => {
+            // Закрываем все другие элементы
+            accordionItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                }
+            });
             
-            if (itemPosition < screenPosition) {
-                item.style.animation = `fadeIn 0.6s forwards ${index * 0.15}s`;
+            // Переключаем текущий элемент
+            const isActive = item.classList.toggle('active');
+            
+            if (isActive) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                content.style.maxHeight = null;
             }
         });
-    }
+    });
+}
+    // Добавьте в обработчик событий
+    document.querySelector('.header-cta').addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    const targetSection = document.querySelector(targetId);
     
+    if (targetSection) {
+        window.scrollTo({
+            top: targetSection.offsetTop - 80,
+            behavior: 'smooth'
+        });
+    }
+});
     // Анимация кнопок контактов
     const contactButtons = document.querySelectorAll('.contact-button');
     contactButtons.forEach(button => {
@@ -153,14 +165,30 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Обработчики событий
     window.addEventListener('scroll', () => {
-        underlineAllOnScroll();
         animateOnScroll();
         animateCards();
         animateAdvantages();
         animateFeatures();
         animateFaqItems();
     });
+    function activateMenu() {
+    let fromTop = window.scrollY + 100;
     
+    sections.forEach(section => {
+        const sectionHeight = section.offsetHeight;
+        const sectionTop = section.offsetTop;
+        const sectionId = section.getAttribute('id');
+        
+        if (fromTop >= sectionTop && fromTop <= sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
+    }
     // Инициализация
     activateMenu();
     animateOnScroll();
@@ -169,3 +197,4 @@ document.addEventListener('DOMContentLoaded', function() {
     animateFeatures();
     animateFaqItems();
 });
+
