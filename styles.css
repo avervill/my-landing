@@ -32,78 +32,32 @@ body {
 
 /* Header Styles */
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #f8fafc;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-    z-index: 1000;
-    height: 70px; /* Фиксированная высота хедера */
-    display: flex;
-    align-items: center; /* Вертикальное выравнивание */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8fafc;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  height: 70px;
 }
 
 .header-container {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.nav {
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.nav-list {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    align-items: center; /* Важно для вертикального выравнивания */
-    gap: 30px;
-}
-
-.nav-item {
-    height: 100%;
-    display: flex;
-    align-items: center; /* Центрируем по вертикали */
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 17px;
-    padding: 0 5px; /* Изменили padding */
-    position: relative;
-    transition: all 0.3s ease;
-    height: 100%;
-    display: flex;
-    align-items: center; /* Центрируем текст */
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 20px; /* Подстраиваем под высоту хедера */
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--primary-color);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.nav-link:hover::after {
-    transform: scaleX(1);
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary-color);
+  z-index: 1001;
 }
 
 /* Бургер-кнопка */
@@ -126,6 +80,67 @@ body {
   height: 3px;
   background: var(--primary-color);
   transition: all 0.3s ease;
+}
+
+/* Навигация */
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 30px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 17px;
+  padding: 8px 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Кнопка (десктоп) */
+.desktop-cta {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+  margin-left: 40px;
+}
+
+.desktop-cta:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
 }
 
 /* Мобильное меню */
@@ -156,12 +171,19 @@ body {
   .nav-list {
     flex-direction: column;
     gap: 20px;
-    margin-bottom: 30px;
   }
   
-  .header-cta {
-    margin: 0;
-    align-self: flex-start;
+  /* Кнопка (мобильная) */
+  .mobile-cta {
+    display: block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 30px;
   }
   
   /* Анимация бургера */
@@ -176,63 +198,6 @@ body {
   .burger-btn.active span:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
   }
-}
-
-.header-cta {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 10px 25px;
-    border-radius: 50px;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 15px;
-    transition: var(--transition);
-    box-shadow: var(--shadow);
-    white-space: nowrap;
-    margin-left: 20px;
-}
-
-.header-cta:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-}
-
-/* Адаптивность */
-@media (max-width: 992px) {
-    .header {
-        height: auto;
-        padding: 15px 0;
-    }
-    
-    .header-container {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .nav-list {
-        flex-wrap: wrap;
-        justify-content: center;
-        height: auto;
-        gap: 15px;
-    }
-    
-    .nav-item {
-        height: auto;
-    }
-    
-    .nav-link {
-        height: auto;
-        padding: 8px 0;
-    }
-    
-    .nav-link::after {
-        bottom: 0;
-    }
-    
-    .header-cta {
-        margin: 5px 0 0 0;
-    }
 }
 /* Main Section */
 .main-section {
