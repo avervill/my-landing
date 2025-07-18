@@ -9,8 +9,39 @@ function scrollToContacts() {
 }
 
 
+
+// Бургер-меню
+function initBurgerMenu() {
+  const burgerBtn = document.querySelector('.burger-btn');
+  const nav = document.querySelector('.nav');
+  
+  burgerBtn.addEventListener('click', () => {
+    burgerBtn.classList.toggle('active');
+    nav.classList.toggle('active');
+    
+    // Блокировка скролла при открытом меню
+    if (nav.classList.contains('active')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  });
+  
+  // Закрытие меню при клике на ссылку
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (nav.classList.contains('active')) {
+        burgerBtn.classList.remove('active');
+        nav.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     initAccordion();
+    initBurgerMenu();
     // Плавный скролл и подсветка пунктов меню
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
